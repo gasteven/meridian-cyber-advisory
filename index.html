@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meridian Cyber Advisory — Fractional vCISO &amp; Compliance</title>
+<meta name="description" content="Fractional vCISO and compliance advisory for growing companies. Executive-level security leadership without the executive price tag.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #05070D;
+    --bg-alt: #0A0E1A;
+    --panel: #0F1424;
+    --panel-2: #131A2E;
+    --border: #232B45;
+    --text: #E7EAF3;
+    --text-dim: #8992AB;
+    --text-mute: #5B6382;
+    --cyan: #22D3EE;
+    --blue: #3B82F6;
+    --violet: #8B5CF6;
+    --green: #34D399;
+    --font: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --mono: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font);
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  a { text-decoration: none; color: inherit; }
+  img { max-width: 100%; display: block; }
+  .wrap { max-width: 1160px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 2; }
+  ::selection { background: var(--cyan); color: #05070D; }
+
+  /* Ambient background glow */
+  .glow {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+  }
+  .glow::before, .glow::after {
+    content: ""; position: absolute; border-radius: 50%; filter: blur(120px); opacity: .35;
+  }
+  .glow::before {
+    width: 640px; height: 640px; background: var(--blue); top: -220px; left: -160px;
+    animation: float1 16s ease-in-out infinite;
+  }
+  .glow::after {
+    width: 560px; height: 560px; background: var(--violet); bottom: -200px; right: -140px;
+    animation: float2 18s ease-in-out infinite;
+  }
+  @keyframes float1 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(60px, 40px); } }
+  @keyframes float2 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(-50px, -30px); } }
+
+  .grid-overlay {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image:
+      linear-gradient(to right, rgba(255,255,255,.035) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,.035) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+  }
+
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--mono); text-transform: uppercase; letter-spacing: .12em;
+    font-size: 12px; font-weight: 700; color: var(--cyan);
+    background: rgba(34,211,238,.08); border: 1px solid rgba(34,211,238,.25);
+    padding: 6px 14px; border-radius: 999px; margin-bottom: 22px;
+  }
+  .eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 8px var(--cyan); }
+
+  h1, h2, h3 { font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
+  h2 { font-size: 36px; }
+  p { color: var(--text-dim); }
+
+  .gradient-text {
+    background: linear-gradient(90deg, #fff 20%, var(--cyan) 60%, var(--blue) 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: linear-gradient(135deg, var(--cyan), var(--blue));
+    color: #05070D; padding: 15px 30px; border-radius: 8px;
+    font-weight: 700; font-size: 15px; border: none; cursor: pointer;
+    box-shadow: 0 0 0 rgba(34,211,238,0); transition: box-shadow .25s ease, transform .2s ease;
+  }
+  .btn:hover { box-shadow: 0 8px 30px -6px rgba(34,211,238,.55); transform: translateY(-2px); }
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1.5px solid var(--border); color: var(--text);
+    padding: 14px 28px; border-radius: 8px; font-weight: 600; font-size: 15px;
+    background: rgba(255,255,255,.02); transition: border-color .2s ease, background .2s ease;
+  }
+  .btn-outline:hover { border-color: var(--cyan); background: rgba(34,211,238,.06); }
+
+  /* Header */
+  header {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(5,7,13,.72); backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+  }
+  header .wrap { display: flex; align-items: center; justify-content: space-between; height: 74px; }
+  .logo { font-weight: 800; font-size: 18px; display: flex; align-items: center; gap: 10px; letter-spacing: -.01em; }
+  .logo-mark {
+    width: 30px; height: 30px; border-radius: 8px;
+    background: linear-gradient(135deg, var(--cyan), var(--violet));
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-weight: 700; font-size: 14px; color: #05070D;
+  }
+  nav ul { list-style: none; display: none; gap: 34px; }
+  nav a { font-size: 14px; font-weight: 600; color: var(--text-dim); transition: color .15s ease; }
+  nav a:hover { color: #fff; }
+  @media (min-width: 780px) { nav ul { display: flex; } }
+  .nav-cta { display: none; }
+  @media (min-width: 780px) { .nav-cta { display: inline-flex; padding: 10px 22px; font-size: 13.5px; } }
+
+  /* Hero */
+  .hero { padding: 130px 0 90px; text-align: center; position: relative; }
+  .hero .wrap { max-width: 840px; }
+  .hero h1 { font-size: clamp(34px, 6vw, 62px); margin-bottom: 24px; }
+  .hero p.lead { font-size: 19px; color: var(--text-dim); max-width: 620px; margin: 0 auto 40px; }
+  .hero-ctas { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 64px; }
+  .hero-ctas .btn, .hero-ctas .btn-outline { font-size: 15.5px; }
+
+  .term { font-family: var(--mono); }
+
+  /* Stat strip */
+  .stat-strip {
+    display: grid; grid-template-columns: repeat(3,1fr); gap: 1px;
+    background: var(--border); border: 1px solid var(--border); border-radius: 14px; overflow: hidden;
+    max-width: 780px; margin: 0 auto;
+  }
+  .stat-strip .stat { background: var(--panel); padding: 26px 18px; text-align: center; }
+  .stat-num { font-family: var(--mono); font-size: 30px; font-weight: 700; color: var(--cyan); }
+  .stat-label { font-size: 12.5px; color: var(--text-mute); margin-top: 6px; letter-spacing: .01em; }
+  @media (max-width: 600px) { .stat-strip { grid-template-columns: 1fr; } }
+
+  section { padding: 100px 0; position: relative; }
+  .section-head { max-width: 640px; margin: 0 auto 56px; text-align: center; }
+  .section-head p { font-size: 16.5px; }
+  .section-head h2 { margin-bottom: 16px; }
+
+  /* Services */
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 900px) { .services-grid { grid-template-columns: 1fr; } }
+  .service-card {
+    position: relative;
+    border: 1px solid var(--border); border-radius: 14px; padding: 32px 26px;
+    background: linear-gradient(180deg, rgba(255,255,255,.025), rgba(255,255,255,0));
+    transition: transform .25s ease, border-color .25s ease;
+  }
+  .service-card:hover { transform: translateY(-6px); border-color: rgba(34,211,238,.4); }
+  .service-card::before {
+    content: ""; position: absolute; top: 0; left: 20px; right: 20px; height: 2px;
+    background: linear-gradient(90deg, var(--cyan), var(--violet)); border-radius: 2px;
+    opacity: 0; transition: opacity .25s ease;
+  }
+  .service-card:hover::before { opacity: 1; }
+  .service-card .icon {
+    width: 46px; height: 46px; border-radius: 10px;
+    background: rgba(34,211,238,.08); border: 1px solid rgba(34,211,238,.25);
+    display: flex; align-items: center; justify-content: center; margin-bottom: 20px; font-size: 20px;
+  }
+  .service-card h3 { font-size: 19px; margin-bottom: 10px; color: #fff; }
+  .service-card p.desc { font-size: 14.5px; margin-bottom: 18px; }
+  .service-card ul { list-style: none; font-size: 13.5px; color: var(--text-dim); }
+  .service-card li { margin-bottom: 9px; padding-left: 20px; position: relative; }
+  .service-card li::before { content: "→"; position: absolute; left: 0; color: var(--cyan); font-family: var(--mono); }
+
+  /* Pricing */
+  .pricing-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; align-items: stretch; }
+  @media (max-width: 1000px) { .pricing-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .pricing-grid { grid-template-columns: 1fr; } }
+  .price-card {
+    border: 1px solid var(--border); border-radius: 14px; padding: 28px 22px;
+    background: var(--panel); display: flex; flex-direction: column; position: relative;
+    transition: border-color .2s ease, transform .2s ease;
+  }
+  .price-card:hover { transform: translateY(-4px); border-color: rgba(34,211,238,.35); }
+  .price-card.featured { border-color: var(--cyan); background: linear-gradient(180deg, rgba(34,211,238,.07), var(--panel) 60%); }
+  .badge {
+    position: absolute; top: -12px; left: 22px;
+    background: linear-gradient(135deg, var(--cyan), var(--blue)); color: #05070D;
+    font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 999px; letter-spacing: .02em;
+  }
+  .price-card h3 { font-size: 16px; color: #fff; margin-bottom: 10px; }
+  .price-card .amount { font-family: var(--mono); font-size: 24px; font-weight: 700; color: var(--cyan); margin-bottom: 4px; }
+  .price-card .amount small { font-family: var(--font); font-size: 12.5px; color: var(--text-mute); font-weight: 500; }
+  .price-card p.pdesc { font-size: 13.5px; margin: 14px 0 16px; }
+  .price-card ul { list-style: none; font-size: 13px; color: var(--text-dim); flex-grow: 1; }
+  .price-card li { margin-bottom: 8px; padding-left: 18px; position: relative; }
+  .price-card li::before { content: "✓"; position: absolute; left: 0; color: var(--green); }
+  .pricing-note { margin-top: 32px; font-size: 14px; color: var(--text-mute); text-align: center; }
+
+  /* Process */
+  .process-line { position: relative; }
+  .process-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; position: relative; }
+  @media (max-width: 900px) { .process-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 540px) { .process-grid { grid-template-columns: 1fr; } }
+  .process-step { position: relative; padding-top: 8px; }
+  .process-step .num {
+    width: 38px; height: 38px; border-radius: 10px;
+    background: var(--panel-2); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-weight: 700; font-size: 14px; color: var(--cyan); margin-bottom: 16px;
+  }
+  .process-step h3 { font-size: 16px; margin-bottom: 8px; color: #fff; }
+  .process-step p { font-size: 13.5px; }
+
+  /* About */
+  .about { display: grid; grid-template-columns: .9fr 1.4fr; gap: 54px; align-items: center; }
+  @media (max-width: 820px) { .about { grid-template-columns: 1fr; } }
+  .about-visual {
+    width: 100%; aspect-ratio: 1; border-radius: 18px; position: relative; overflow: hidden;
+    background: var(--panel); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .about-visual .ring {
+    position: absolute; border-radius: 50%; border: 1px solid rgba(34,211,238,.25);
+  }
+  .about-visual .ring.r1 { width: 60%; height: 60%; }
+  .about-visual .ring.r2 { width: 85%; height: 85%; border-color: rgba(139,92,246,.18); }
+  .about-visual .initials {
+    font-family: var(--mono); font-size: 44px; font-weight: 700;
+    background: linear-gradient(135deg, var(--cyan), var(--violet));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .about h2 { margin-bottom: 18px; font-size: 30px; }
+  .about p { margin-bottom: 14px; font-size: 15.5px; }
+  .credentials { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+  .credentials span {
+    font-family: var(--mono); font-size: 12.5px; font-weight: 600; color: var(--cyan);
+    background: rgba(34,211,238,.08); border: 1px solid rgba(34,211,238,.25);
+    padding: 7px 14px; border-radius: 999px;
+  }
+
+  /* CTA band */
+  .cta-band {
+    text-align: center; border-radius: 20px; margin: 0 24px;
+    max-width: 1100px; margin-left: auto; margin-right: auto;
+    background: linear-gradient(135deg, rgba(34,211,238,.1), rgba(139,92,246,.1));
+    border: 1px solid var(--border); padding: 70px 40px;
+  }
+  .cta-band h2 { margin-bottom: 14px; font-size: 32px; }
+  .cta-band p { margin-bottom: 30px; max-width: 520px; margin-left: auto; margin-right: auto; }
+
+  /* Contact */
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+  @media (max-width: 820px) { .contact-grid { grid-template-columns: 1fr; } }
+  .contact-item { display: flex; gap: 16px; margin-bottom: 24px; }
+  .contact-item .icon {
+    width: 42px; height: 42px; border-radius: 10px; flex-shrink: 0;
+    background: rgba(34,211,238,.08); border: 1px solid rgba(34,211,238,.25);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .contact-item h3 { font-size: 14.5px; color: #fff; margin-bottom: 3px; }
+  .contact-item p { font-size: 14px; }
+  .contact-item a { color: var(--cyan); font-weight: 600; }
+  form.contact-form {
+    display: flex; flex-direction: column; gap: 14px;
+    background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 26px;
+  }
+  form.contact-form input, form.contact-form textarea {
+    padding: 13px 14px; border: 1px solid var(--border); border-radius: 8px;
+    font-size: 14.5px; font-family: inherit; background: var(--bg-alt); color: var(--text);
+  }
+  form.contact-form input::placeholder, form.contact-form textarea::placeholder { color: var(--text-mute); }
+  form.contact-form input:focus, form.contact-form textarea:focus { outline: none; border-color: var(--cyan); }
+  form.contact-form textarea { resize: vertical; min-height: 100px; }
+  form.contact-form button { align-self: flex-start; border: none; cursor: pointer; }
+
+  footer { border-top: 1px solid var(--border); padding: 36px 0; }
+  footer .wrap { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  footer p { font-size: 13px; color: var(--text-mute); }
+
+  /* Scroll reveal */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<div class="glow"></div>
+<div class="grid-overlay"></div>
+
+<header>
+  <div class="wrap">
+    <div class="logo"><span class="logo-mark">M</span>Meridian Cyber Advisory</div>
+    <nav>
+      <ul>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#process">How It Works</a></li>
+        <li><a href="#about">About</a></li>
+      </ul>
+    </nav>
+    <a href="#contact" class="btn nav-cta">Book a Call</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow"><span class="dot"></span>Now booking Q3 risk snapshot calls</span>
+    <h1>Security leadership that <span class="gradient-text">closes deals</span>, not just tickets.</h1>
+    <p class="lead">Meridian Cyber Advisory gives growing companies executive-level security leadership — risk management, compliance readiness, board reporting — for a fraction of the cost of a full-time CISO.</p>
+    <div class="hero-ctas">
+      <a href="mailto:gabrielszegi8@gmail.com?subject=Free%20Risk%20Snapshot%20Call" class="btn">Book a Free Risk Snapshot Call →</a>
+      <a href="#services" class="btn-outline">See Services</a>
+    </div>
+    <div class="stat-strip reveal">
+      <div class="stat">
+        <div class="stat-num">59%</div>
+        <div class="stat-label">of security teams report critical skills gaps</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">$250K+</div>
+        <div class="stat-label">average full-time CISO salary and equity</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">3.4M</div>
+        <div class="stat-label">unfilled cybersecurity roles globally</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow"><span class="dot"></span>Services</span>
+      <h2>Security leadership, <span class="gradient-text">scoped to your stage</span></h2>
+      <p>Pick a retainer for ongoing coverage, or a sprint when you're racing a deadline.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="icon">🛡️</div>
+        <h3>Fractional vCISO Retainer</h3>
+        <p class="desc">Ongoing security leadership on a monthly retainer — the strategic layer most growing companies are missing.</p>
+        <ul>
+          <li>Risk assessment &amp; roadmap</li>
+          <li>Security policy development</li>
+          <li>Vendor &amp; tool oversight</li>
+          <li>Board &amp; leadership reporting</li>
+          <li>Incident response readiness</li>
+        </ul>
+      </div>
+      <div class="service-card reveal">
+        <div class="icon">✅</div>
+        <h3>Compliance Readiness Sprint</h3>
+        <p class="desc">A focused 6–10 week engagement to get audit-ready for SOC 2, HIPAA, or a cyber insurance renewal.</p>
+        <ul>
+          <li>Gap assessment</li>
+          <li>Policy &amp; control set build-out</li>
+          <li>Evidence collection prep</li>
+          <li>Audit &amp; questionnaire support</li>
+        </ul>
+      </div>
+      <div class="service-card reveal">
+        <div class="icon">🎓</div>
+        <h3>Security Awareness Training</h3>
+        <p class="desc">A low-lift add-on that keeps your team sharp and your insurance underwriters happy.</p>
+        <ul>
+          <li>Quarterly phishing simulations</li>
+          <li>Staff training sessions</li>
+          <li>Reporting for insurance &amp; audits</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow"><span class="dot"></span>Pricing</span>
+      <h2>Straightforward <span class="gradient-text">packages</span></h2>
+      <p>Final pricing depends on company size, industry, and regulatory scope — these ranges reflect typical engagements.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="price-card reveal">
+        <h3>vCISO — Light</h3>
+        <div class="amount">$2.5–4K <small>/mo</small></div>
+        <p class="pdesc">For 10–30 employee companies with no compliance mandate yet.</p>
+        <ul>
+          <li>8–12 hrs/mo advisory</li>
+          <li>Quarterly roadmap review</li>
+          <li>Direct advisor access</li>
+        </ul>
+      </div>
+      <div class="price-card featured reveal">
+        <span class="badge">Most Popular</span>
+        <h3>vCISO — Standard</h3>
+        <div class="amount">$4.5–8K <small>/mo</small></div>
+        <p class="pdesc">For 30–100 employees fielding customer security questionnaires.</p>
+        <ul>
+          <li>15–20 hrs/mo</li>
+          <li>Policy build &amp; vendor review</li>
+          <li>Board &amp; leadership reporting</li>
+        </ul>
+      </div>
+      <div class="price-card reveal">
+        <h3>Compliance Sprint</h3>
+        <div class="amount">$9–18K <small>fixed</small></div>
+        <p class="pdesc">SaaS startups closing enterprise deals; healthcare/fintech vendors.</p>
+        <ul>
+          <li>Gap assessment</li>
+          <li>Policy &amp; evidence prep</li>
+          <li>SOC 2 / HIPAA readiness</li>
+        </ul>
+      </div>
+      <div class="price-card reveal">
+        <h3>Awareness Training</h3>
+        <div class="amount">$750–1.5K <small>/qtr</small></div>
+        <p class="pdesc">Add-on for any existing client.</p>
+        <ul>
+          <li>Phishing simulation</li>
+          <li>Staff training session</li>
+          <li>Insurance-ready reporting</li>
+        </ul>
+      </div>
+    </div>
+    <p class="pricing-note">Not sure which package fits? Start with a free 30-minute risk snapshot call and we'll scope it together.</p>
+  </div>
+</section>
+
+<section id="process">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow"><span class="dot"></span>How It Works</span>
+      <h2>From first call to <span class="gradient-text">ongoing coverage</span></h2>
+    </div>
+    <div class="process-grid">
+      <div class="process-step reveal">
+        <div class="num">01</div>
+        <h3>Free risk snapshot call</h3>
+        <p>30 minutes to understand where you stand today and whether a retainer or sprint fits better.</p>
+      </div>
+      <div class="process-step reveal">
+        <div class="num">02</div>
+        <h3>Proposal &amp; scope</h3>
+        <p>A clear, written scope of deliverables and hours — no surprise invoices.</p>
+      </div>
+      <div class="process-step reveal">
+        <div class="num">03</div>
+        <h3>Onboarding &amp; assessment</h3>
+        <p>Baseline risk assessment and roadmap so you know exactly what's being worked on and why.</p>
+      </div>
+      <div class="process-step reveal">
+        <div class="num">04</div>
+        <h3>Ongoing advisory</h3>
+        <p>Monthly reporting, direct access, and measurable progress against the roadmap.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="about">
+      <div class="about-visual reveal">
+        <div class="ring r1"></div>
+        <div class="ring r2"></div>
+        <div class="initials">GK</div>
+      </div>
+      <div class="reveal">
+        <span class="eyebrow"><span class="dot"></span>About</span>
+        <h2>Led by a practitioner, <span class="gradient-text">not a sales team</span></h2>
+        <p>Meridian Cyber Advisory is led by Gabriel Koszegi, a cybersecurity practitioner focused on helping growing companies build practical, risk-based security programs — without the overhead of a full security department.</p>
+        <p>The mission is simple: give companies that are too big to ignore security, but too small for a full-time CISO, direct access to senior-level guidance that fits their stage and budget.</p>
+        <div class="credentials">
+          <span>Cybersecurity Practitioner</span>
+          <span>Risk &amp; Compliance</span>
+          <span>Incident Response</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="cta-band reveal">
+    <h2>Not sure where to start?</h2>
+    <p>Book a free 30-minute risk snapshot call — no pitch, just a clear read on where your biggest gaps are.</p>
+    <a href="mailto:gabrielszegi8@gmail.com?subject=Free%20Risk%20Snapshot%20Call" class="btn">Book a Free Call →</a>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="section-head reveal" style="margin-bottom:56px;">
+      <span class="eyebrow"><span class="dot"></span>Contact</span>
+      <h2>Let's talk about <span class="gradient-text">your security gaps</span></h2>
+      <p>Reach out directly, or use the form and I'll follow up within one business day.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="reveal">
+        <div class="contact-item">
+          <div class="icon">✉️</div>
+          <div>
+            <h3>Email</h3>
+            <p><a href="mailto:gabrielszegi8@gmail.com">gabrielszegi8@gmail.com</a></p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="icon">💼</div>
+          <div>
+            <h3>LinkedIn</h3>
+            <p><a href="#">Add your LinkedIn profile URL here</a></p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="icon">📅</div>
+          <div>
+            <h3>Book directly</h3>
+            <p>Add a Calendly (or similar) link here for one-click scheduling</p>
+          </div>
+        </div>
+      </div>
+      <form class="contact-form reveal" action="mailto:gabrielszegi8@gmail.com" method="post" enctype="text/plain">
+        <input type="text" name="name" placeholder="Your name" required>
+        <input type="email" name="email" placeholder="Work email" required>
+        <input type="text" name="company" placeholder="Company">
+        <textarea name="message" placeholder="What's going on with security at your company?" required></textarea>
+        <button type="submit" class="btn">Send Message →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>© 2026 Meridian Cyber Advisory. All rights reserved.</p>
+    <p class="term">Fractional vCISO &amp; Compliance Advisory</p>
+  </div>
+</footer>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
