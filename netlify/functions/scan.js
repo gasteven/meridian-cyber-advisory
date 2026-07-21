@@ -1,6 +1,6 @@
 const dns = require('dns').promises;
 const https = require('https');
-const { getStore } = require('@netlify/blobs');
+const { scanStatsStore } = require('./blobs-store');
 
 function isPrivateIP(ip) {
   const parts = ip.split('.').map(Number);
@@ -169,7 +169,7 @@ async function scan(rawDomain) {
 // time without storing who looked anyone up.
 async function logAggregateStats(result) {
   try {
-    const store = getStore('scan-stats');
+    const store = scanStatsStore();
     const current = (await store.get('aggregate', { type: 'json' })) || {
       totalScans: 0,
       gradeCounts: { A: 0, B: 0, C: 0, D: 0, F: 0 },
