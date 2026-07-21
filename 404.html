@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page Not Found — Meridian Cyber Advisory</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #05070D; --panel: #0F1424; --border: #232B45;
+    --text: #E7EAF3; --text-dim: #8992AB; --text-mute: #5B6382;
+    --cyan: #22D3EE; --blue: #3B82F6; --violet: #8B5CF6;
+    --font: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --mono: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: var(--font); color: var(--text); background: var(--bg);
+    min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 24px; position: relative; overflow: hidden;
+  }
+  a { text-decoration: none; }
+  .glow { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+  .glow::before, .glow::after { content: ""; position: absolute; border-radius: 50%; filter: blur(120px); opacity: .3; }
+  .glow::before { width: 560px; height: 560px; background: var(--blue); top: -200px; left: -160px; }
+  .glow::after { width: 480px; height: 480px; background: var(--violet); bottom: -180px; right: -140px; }
+  .content { position: relative; z-index: 2; max-width: 520px; }
+  .logo-mark {
+    width: 56px; height: 56px; border-radius: 14px; margin: 0 auto 28px;
+    background: linear-gradient(135deg, var(--cyan), var(--violet));
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-weight: 800; font-size: 24px; color: #05070D;
+  }
+  .code { font-family: var(--mono); font-size: 15px; font-weight: 700; color: var(--cyan); letter-spacing: .08em; margin-bottom: 14px; }
+  h1 { font-size: clamp(28px, 5vw, 40px); font-weight: 800; margin-bottom: 16px; letter-spacing: -0.02em; }
+  p { font-size: 16px; color: var(--text-dim); margin-bottom: 34px; line-height: 1.6; }
+  .actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: linear-gradient(135deg, var(--cyan), var(--blue));
+    color: #05070D; padding: 14px 26px; border-radius: 8px; font-weight: 700; font-size: 14.5px;
+  }
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: 8px; border: 1.5px solid var(--border); color: var(--text);
+    padding: 13px 24px; border-radius: 8px; font-weight: 600; font-size: 14.5px; background: rgba(255,255,255,.02);
+  }
+</style>
+</head>
+<body>
+  <div class="glow"></div>
+  <div class="content">
+    <div class="logo-mark">M</div>
+    <div class="code">ERROR 404</div>
+    <h1>This page didn't pass the scan.</h1>
+    <p>The page you're looking for doesn't exist or has moved. Try the homepage, or run your own free security scan while you're here.</p>
+    <div class="actions">
+      <a href="/" class="btn">Back to homepage →</a>
+      <a href="/scan.html" class="btn-outline">Get Your Free Security Grade</a>
+    </div>
+  </div>
+</body>
+</html>
