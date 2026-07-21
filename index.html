@@ -114,7 +114,7 @@
     display: flex; align-items: center; justify-content: center;
     font-family: var(--mono); font-weight: 700; font-size: 14px; color: #05070D;
   }
-  nav ul { list-style: none; display: none; gap: 34px; }
+  nav ul { list-style: none; display: none; gap: 30px; }
   nav a { font-size: 14px; font-weight: 600; color: var(--text-dim); transition: color .15s ease; }
   nav a:hover { color: #fff; }
   @media (min-width: 780px) { nav ul { display: flex; } }
@@ -148,8 +148,9 @@
   .section-head h2 { margin-bottom: 16px; }
 
   /* Services */
-  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-  @media (max-width: 900px) { .services-grid { grid-template-columns: 1fr; } }
+  .services-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  @media (max-width: 1050px) { .services-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .services-grid { grid-template-columns: 1fr; } }
   .service-card {
     position: relative;
     border: 1px solid var(--border); border-radius: 14px; padding: 32px 26px;
@@ -168,9 +169,9 @@
     background: rgba(34,211,238,.08); border: 1px solid rgba(34,211,238,.25);
     display: flex; align-items: center; justify-content: center; margin-bottom: 20px; font-size: 20px;
   }
-  .service-card h3 { font-size: 19px; margin-bottom: 10px; color: #fff; }
-  .service-card p.desc { font-size: 14.5px; margin-bottom: 18px; }
-  .service-card ul { list-style: none; font-size: 13.5px; color: var(--text-dim); }
+  .service-card h3 { font-size: 17.5px; margin-bottom: 10px; color: #fff; }
+  .service-card p.desc { font-size: 14px; margin-bottom: 18px; }
+  .service-card ul { list-style: none; font-size: 13px; color: var(--text-dim); }
   .service-card li { margin-bottom: 9px; padding-left: 20px; position: relative; }
   .service-card li::before { content: "→"; position: absolute; left: 0; color: var(--cyan); font-family: var(--mono); }
 
@@ -198,6 +199,26 @@
   .price-card li { margin-bottom: 8px; padding-left: 18px; position: relative; }
   .price-card li::before { content: "✓"; position: absolute; left: 0; color: var(--green); }
   .pricing-note { margin-top: 32px; font-size: 14px; color: var(--text-mute); text-align: center; }
+
+  /* Resources */
+  .resources-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  @media (max-width: 900px) { .resources-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .resources-grid { grid-template-columns: 1fr; } }
+  .resource-card {
+    border: 1px solid var(--border); border-radius: 14px; padding: 26px 24px;
+    background: var(--panel); display: flex; flex-direction: column; gap: 10px;
+    transition: transform .2s ease, border-color .2s ease;
+  }
+  .resource-card:hover { transform: translateY(-4px); border-color: rgba(34,211,238,.35); }
+  .resource-tag {
+    font-family: var(--mono); font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--cyan); background: rgba(34,211,238,.08); border: 1px solid rgba(34,211,238,.25);
+    padding: 3px 10px; border-radius: 999px; align-self: flex-start;
+  }
+  .resource-card h3 { font-size: 16px; color: #fff; margin-top: 4px; }
+  .resource-card p { font-size: 13.5px; flex-grow: 1; }
+  .resource-card .rlink { font-size: 13.5px; font-weight: 700; color: var(--cyan); margin-top: 4px; }
+  .resource-card .rlink:hover { text-decoration: underline; }
 
   /* Process */
   .process-line { position: relative; }
@@ -297,8 +318,8 @@
       <ul>
         <li><a href="/scan.html">Free Security Scan</a></li>
         <li><a href="#services">Services</a></li>
+        <li><a href="#resources">Free Resources</a></li>
         <li><a href="#pricing">Pricing</a></li>
-        <li><a href="#process">How It Works</a></li>
         <li><a href="#about">About</a></li>
       </ul>
     </nav>
@@ -349,7 +370,7 @@
           <li>Security policy development</li>
           <li>Vendor &amp; tool oversight</li>
           <li>Board &amp; leadership reporting</li>
-          <li>Incident response readiness</li>
+          <li>Live compliance dashboard</li>
         </ul>
       </div>
       <div class="service-card reveal">
@@ -364,6 +385,17 @@
         </ul>
       </div>
       <div class="service-card reveal">
+        <div class="icon">🤝</div>
+        <h3>Embedded Security Expert</h3>
+        <p class="desc">Meridian joins your enterprise customer's security review or sales call as your on-demand security expert.</p>
+        <ul>
+          <li>Live customer security calls</li>
+          <li>Security questionnaire responses</li>
+          <li>Real-time, deal-specific answers</li>
+          <li>Unblocks stalled enterprise deals</li>
+        </ul>
+      </div>
+      <div class="service-card reveal">
         <div class="icon">🎓</div>
         <h3>Security Awareness Training</h3>
         <p class="desc">A low-lift add-on that keeps your team sharp and your insurance underwriters happy.</p>
@@ -372,6 +404,54 @@
           <li>Staff training sessions</li>
           <li>Reporting for insurance &amp; audits</li>
         </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="resources">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow"><span class="dot"></span>Free Resources</span>
+      <h2>No signup, no <span class="gradient-text">sales call required</span></h2>
+      <p>Practical tools and templates, free to use — whether or not you ever become a client.</p>
+    </div>
+    <div class="resources-grid">
+      <div class="resource-card reveal">
+        <span class="resource-tag">Tool</span>
+        <h3>Instant Security Grade</h3>
+        <p>Get an A–F grade on your domain's email security, HTTPS, and security headers in seconds.</p>
+        <a href="/scan.html" class="rlink">Run the scan →</a>
+      </div>
+      <div class="resource-card reveal">
+        <span class="resource-tag">Preview</span>
+        <h3>Sample Client Dashboard</h3>
+        <p>See the live compliance dashboard included with every vCISO retainer engagement.</p>
+        <a href="/dashboard-demo.html" class="rlink">View sample dashboard →</a>
+      </div>
+      <div class="resource-card reveal">
+        <span class="resource-tag">Report</span>
+        <h3>State of Startup Security, 2026</h3>
+        <p>What the latest breach and compliance-cost data means for early-stage companies.</p>
+        <a href="/resources/state-of-startup-security-2026.docx" class="rlink">Download report →</a>
+      </div>
+      <div class="resource-card reveal">
+        <span class="resource-tag">Template</span>
+        <h3>Information Security Policy</h3>
+        <p>A baseline security policy template you can adapt for your company today.</p>
+        <a href="/resources/information-security-policy-template.docx" class="rlink">Download template →</a>
+      </div>
+      <div class="resource-card reveal">
+        <span class="resource-tag">Template</span>
+        <h3>Incident Response Plan</h3>
+        <p>Roles, severity levels, and a step-by-step response process for lean teams.</p>
+        <a href="/resources/incident-response-plan-template.docx" class="rlink">Download template →</a>
+      </div>
+      <div class="resource-card reveal">
+        <span class="resource-tag">Template</span>
+        <h3>Vendor Risk Questionnaire</h3>
+        <p>Screen new vendors and third parties before they touch your data.</p>
+        <a href="/resources/vendor-risk-questionnaire-template.docx" class="rlink">Download template →</a>
       </div>
     </div>
   </div>
