@@ -323,6 +323,32 @@
   table.compare-table th.meridian-col { color: var(--cyan); background: rgba(34,211,238,.1); }
   @media (max-width: 700px) { table.compare-table { font-size: 12.5px; } table.compare-table th, table.compare-table td { padding: 12px 10px; } }
 
+  /* Proof / Results */
+  .proof-grid { display: grid; grid-template-columns: 1.1fr 1fr 1fr; gap: 20px; align-items: stretch; }
+  @media (max-width: 900px) { .proof-grid { grid-template-columns: 1fr; } }
+  .proof-card {
+    border: 1px solid var(--border); border-radius: 14px; padding: 28px 26px;
+    background: var(--panel); display: flex; flex-direction: column; gap: 12px;
+  }
+  .proof-card.highlight { border-color: rgba(34,211,238,.35); background: linear-gradient(180deg, rgba(34,211,238,.06), var(--panel) 65%); }
+  .proof-card h3 { font-size: 15.5px; color: #fff; }
+  .proof-card p { font-size: 13.5px; color: var(--text-dim); flex-grow: 1; }
+  .proof-grade-row { display: flex; align-items: center; gap: 16px; margin: 4px 0 2px; }
+  .proof-grade-badge {
+    font-family: var(--mono); font-weight: 800; font-size: 22px; width: 52px; height: 52px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 3px solid var(--border);
+  }
+  .proof-grade-badge.before { color: #FB923C; border-color: #FB923C; }
+  .proof-grade-badge.after { color: var(--cyan); border-color: var(--cyan); box-shadow: 0 0 20px -6px var(--cyan); }
+  .proof-arrow { font-family: var(--mono); color: var(--text-mute); font-size: 18px; }
+  .proof-card .plink { font-size: 13px; font-weight: 700; color: var(--cyan); }
+  .proof-card .plink:hover { text-decoration: underline; }
+  .proof-founding-badge {
+    font-family: var(--mono); font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--violet); background: rgba(139,92,246,.1); border: 1px solid rgba(139,92,246,.3);
+    padding: 3px 10px; border-radius: 999px; align-self: flex-start;
+  }
+
   /* FAQ */
   .faq-list { max-width: 780px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
   .faq-item { border: 1px solid var(--border); border-radius: 12px; background: var(--panel); overflow: hidden; }
@@ -666,6 +692,39 @@
           </tr>
         </tbody>
       </table>
+    </div>
+  </div>
+</section>
+
+<section id="proof">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow"><span class="dot"></span>Proof, not promises</span>
+      <h2>We hold ourselves to the <span class="gradient-text">same standard</span></h2>
+      <p>No client logos yet — Meridian is a new practice. Here's what you can verify yourself instead of taking our word for it.</p>
+    </div>
+    <div class="proof-grid reveal">
+      <div class="proof-card highlight">
+        <h3>Our own site, before and after</h3>
+        <div class="proof-grade-row">
+          <div class="proof-grade-badge before">D</div>
+          <span class="proof-arrow">→</span>
+          <div class="proof-grade-badge after">B</div>
+        </div>
+        <p>We ran our own Instant Security Grade tool against meridian-cyber-advisory.netlify.app: 35/100 before adding standard security headers, 70/100 after. Same checks we run on your domain, applied to our own first.</p>
+        <a href="#hero-scan" class="plink">Run the same scan on your domain →</a>
+      </div>
+      <div class="proof-card">
+        <h3>Every claim is checkable</h3>
+        <p>The stats in our free benchmark report cite Verizon's DBIR, IBM's Cost of a Data Breach report, and public DMARC adoption data — sourced, not invented. The free templates are the real documents we use, not watered-down samples.</p>
+        <a href="#resources" class="plink">See the sources →</a>
+      </div>
+      <div class="proof-card">
+        <span class="proof-founding-badge">Founding Clients</span>
+        <h3>Priority scheduling, locked-in pricing</h3>
+        <p>Early clients get direct input into how engagements are scoped and reported, plus current pricing locked in before rates increase as the practice grows. With your permission, we'll publish a real case study — real numbers, your sign-off required before anything goes live.</p>
+        <a href="#contact" class="plink">Start the conversation →</a>
+      </div>
     </div>
   </div>
 </section>
