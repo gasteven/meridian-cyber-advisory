@@ -232,6 +232,16 @@
   .hr-check .ic.pass { background: rgba(52,211,153,.15); color: var(--green); }
   .hr-check .ic.fail { background: rgba(248,113,113,.15); color: var(--red); }
   .hr-more-link { display: block; text-align: center; margin-top: 18px; font-size: 13px; font-weight: 700; color: var(--cyan); }
+  .hr-email-capture { margin-top: 22px; padding: 18px 20px; border: 1px solid var(--border); border-radius: 10px; background: rgba(255,255,255,.02); }
+  .hrec-label { font-size: 13px; color: var(--text-dim); margin-bottom: 12px; }
+  .hrec-form { display: flex; gap: 10px; flex-wrap: wrap; }
+  .hrec-form input[type=email] { flex: 1; min-width: 180px; padding: 12px 14px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg-alt); color: var(--text); font-size: 13.5px; font-family: var(--font); }
+  .hrec-form input[type=email]:focus { outline: none; border-color: var(--cyan); }
+  .hrec-form input[type=email]::placeholder { color: var(--text-mute); }
+  .hrec-form .btn { font-size: 13.5px; padding: 12px 18px; white-space: nowrap; }
+  .hrec-success { display: none; font-size: 13px; color: var(--green); margin-top: 2px; }
+  .hrec-success.show { display: block; }
+  .hr-email-capture.sent .hrec-form { display: none; }
 
   section { padding: 100px 0; position: relative; }
   .section-head { max-width: 640px; margin: 0 auto 56px; text-align: center; }
@@ -567,6 +577,21 @@
           </div>
         </div>
         <div class="hr-categories" id="hr-categories"></div>
+        <div class="hr-email-capture" id="hr-email-capture">
+          <p class="hrec-label">Want this emailed to you, plus a checklist for fixing what's failing?</p>
+          <form class="hrec-form" id="hrec-form" name="scan-lead" method="POST" data-netlify="true" data-netlify-honeypot="bot-field-lead">
+            <input type="hidden" name="form-name" value="scan-lead">
+            <input type="hidden" name="domain" id="hrec-domain-field">
+            <input type="hidden" name="grade" id="hrec-grade-field">
+            <input type="hidden" name="score" id="hrec-score-field">
+            <p style="position:absolute;left:-9999px;" aria-hidden="true">
+              <label>Leave this field blank: <input name="bot-field-lead" tabindex="-1" autocomplete="off"></label>
+            </p>
+            <input type="email" name="email" placeholder="you@company.com" required>
+            <button type="submit" class="btn">Email me the results</button>
+          </form>
+          <p class="hrec-success" id="hrec-success">Got it — you'll hear from us shortly, no spam.</p>
+        </div>
         <a href="mailto:gabrielszegi8@gmail.com?subject=Free%20Risk%20Snapshot%20Call" class="hr-more-link">Want these fixed before a client, investor, or insurer finds them? Book a free call →</a>
       </div>
     </div>
@@ -1096,6 +1121,14 @@
     document.getElementById('hr-grade-letter').textContent = data.grade;
     document.getElementById('hr-score').textContent = data.score + ' / ' + data.maxScore + ' points';
 
+    const hrecWrap = document.getElementById('hr-email-capture');
+    hrecWrap.classList.remove('sent');
+    document.getElementById('hrec-success').classList.remove('show');
+    document.getElementById('hrec-form').reset();
+    document.getElementById('hrec-domain-field').value = data.domain;
+    document.getElementById('hrec-grade-field').value = data.grade;
+    document.getElementById('hrec-score-field').value = data.score + ' / ' + data.maxScore;
+
     const circle = document.getElementById('hr-grade-circle');
     circle.className = 'hr-grade-circle hr-grade-' + data.grade;
 
@@ -1137,6 +1170,26 @@
       })
       .catch(() => {
         window.location.href = 'mailto:gabrielszegi8@gmail.com?subject=Contact%20from%20site';
+      });
+  });
+
+  // Scan tool email capture
+  const hrecForm = document.getElementById('hrec-form');
+  hrecForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const formData = new FormData(hrecForm);
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(formData).toString(),
+    })
+      .then(() => {
+        document.getElementById('hr-email-capture').classList.add('sent');
+        document.getElementById('hrec-success').classList.add('show');
+      })
+      .catch(() => {
+        const domain = document.getElementById('hrec-domain-field').value;
+        window.location.href = 'mailto:gabrielszegi8@gmail.com?subject=Send%20me%20my%20scan%20results&body=Domain%3A%20' + encodeURIComponent(domain);
       });
   });
 
