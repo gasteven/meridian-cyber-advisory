@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trust Center — Meridian Cyber Advisory</title>
+<meta name="description" content="How Meridian Cyber Advisory handles its own security, data, and infrastructure — the same standard we hold clients to.">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #05070D; --bg-alt: #0A0E1A; --panel: #0F1424; --border: #232B45;
+    --text: #E7EAF3; --text-dim: #8992AB; --text-mute: #5B6382;
+    --cyan: #22D3EE; --blue: #3B82F6; --violet: #8B5CF6; --green: #34D399;
+    --font: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --mono: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font); color: var(--text); background: var(--bg); line-height: 1.7; }
+  a { color: var(--cyan); }
+  .wrap { max-width: 820px; margin: 0 auto; padding: 0 24px; }
+  header { border-bottom: 1px solid var(--border); background: rgba(5,7,13,.9); position: sticky; top: 0; z-index: 10; }
+  header .wrap { max-width: 1080px; display: flex; align-items: center; justify-content: space-between; height: 70px; }
+  .logo { font-weight: 800; font-size: 17px; display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); }
+  .logo-mark { width: 28px; height: 28px; border-radius: 8px; background: linear-gradient(135deg, var(--cyan), var(--violet)); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-weight: 700; font-size: 13px; color: #05070D; }
+  header a.back { font-size: 13.5px; color: var(--text-dim); font-weight: 600; text-decoration: none; }
+  header a.back:hover { color: #fff; }
+  main { padding: 60px 0 100px; }
+  .eyebrow { display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 12.5px; font-weight: 600; color: var(--cyan); text-transform: uppercase; letter-spacing: .04em; margin-bottom: 16px; }
+  .eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 8px var(--cyan); }
+  h1 { font-size: 34px; font-weight: 800; margin-bottom: 12px; letter-spacing: -0.02em; }
+  .lead { font-size: 16px; color: var(--text-dim); max-width: 640px; margin-bottom: 20px; }
+  .updated { font-family: var(--mono); font-size: 12.5px; color: var(--text-mute); margin-bottom: 44px; }
+  h2 { font-size: 19px; font-weight: 700; color: #fff; margin: 44px 0 12px; }
+  p { color: var(--text-dim); margin-bottom: 14px; font-size: 15px; }
+  ul { color: var(--text-dim); margin: 0 0 14px 20px; font-size: 15px; }
+  li { margin-bottom: 8px; }
+  .note {
+    border: 1px solid rgba(34,211,238,.3); background: rgba(34,211,238,.06); border-radius: 10px;
+    padding: 16px 18px; margin-bottom: 30px; font-size: 13.5px; color: var(--text-dim);
+  }
+  .note strong { color: var(--cyan); }
+  .status-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 20px 0 30px; }
+  @media (max-width: 640px) { .status-grid { grid-template-columns: 1fr; } }
+  .status-card { border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; background: var(--panel); }
+  .status-card .sc-label { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .04em; color: var(--text-mute); margin-bottom: 8px; }
+  .status-card .sc-val { font-size: 15px; font-weight: 700; color: #fff; }
+  .status-card .sc-val.ok { color: var(--green); }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 14px; }
+  th, td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--border); }
+  th { color: var(--text-mute); font-size: 12px; text-transform: uppercase; letter-spacing: .04em; }
+  td { color: var(--text-dim); }
+  td.name { color: #fff; font-weight: 600; }
+  footer { border-top: 1px solid var(--border); padding: 28px 0; text-align: center; }
+  footer p { font-size: 12.5px; color: var(--text-mute); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a href="/" class="logo"><span class="logo-mark">M</span>Meridian Cyber Advisory</a>
+    <a href="/" class="back">← Back to site</a>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <span class="eyebrow"><span class="dot"></span>Trust Center</span>
+    <h1>How we handle our own security</h1>
+    <p class="lead">We ask clients to document their security posture and back it up with evidence. Here's ours — the same standard, applied to ourselves, published openly instead of behind a sales call.</p>
+    <p class="updated">Last updated: July 2026</p>
+
+    <div class="note"><strong>Verify it yourself:</strong> don't take this page's word for it — run our own <a href="/#hero-scan">free Instant Security Grade tool</a> against <code>meridian-cyber-advisory.netlify.app</code> and see the live result.</div>
+
+    <div class="status-grid">
+      <div class="status-card">
+        <div class="sc-label">HTTPS / TLS</div>
+        <div class="sc-val ok">Enforced, HSTS enabled</div>
+      </div>
+      <div class="status-card">
+        <div class="sc-label">Security headers</div>
+        <div class="sc-val ok">CSP, X-Frame-Options, and more — see below</div>
+      </div>
+      <div class="status-card">
+        <div class="sc-label">Email authentication</div>
+        <div class="sc-val ok">SPF + DMARC configured</div>
+      </div>
+    </div>
+
+    <h2>What data we actually hold</h2>
+    <p>As a fractional advisory practice, we deliberately keep the data footprint small. In plain terms: we don't store scanned domains, we don't run tracking scripts on our own site, and the free tools are built to need as little of your data as possible to work.</p>
+    <ul>
+      <li><strong>Contact form submissions</strong> — name, email, company, and message, handled through Netlify's form infrastructure. Used only to respond to the inquiry.</li>
+      <li><strong>Free scan tool</strong> — checks a domain's public DNS and HTTP response headers in real time. The domain entered is not stored; only anonymized, aggregate statistics (like the overall distribution of grades) may be recorded, with no link back to who ran a scan.</li>
+      <li><strong>Client engagement data</strong> — during a paid engagement, any sensitive documents, credentials-adjacent findings, or policy drafts are handled per the signed engagement agreement, shared through agreed-upon channels (never over unencrypted email for sensitive material), and retained only as long as the engagement requires.</li>
+    </ul>
+    <p>Full detail on data handling is in the <a href="/privacy.html">Privacy Policy</a>.</p>
+
+    <h2>Infrastructure</h2>
+    <table>
+      <thead><tr><th>Vendor</th><th>Role</th></tr></thead>
+      <tbody>
+        <tr><td class="name">Netlify</td><td>Hosting, serverless functions, form handling, DNS-adjacent config</td></tr>
+        <tr><td class="name">GitHub</td><td>Source control for the site's codebase</td></tr>
+        <tr><td class="name">Google Fonts</td><td>Web font delivery only — no analytics or tracking use</td></tr>
+      </tbody>
+    </table>
+    <p>No client data, scanned domains, or engagement documents are stored in this site's codebase or repository — the site itself is marketing infrastructure, not a client data system. Client-specific work is handled through separate, engagement-specific tooling agreed with each client.</p>
+
+    <h2>Access control</h2>
+    <p>Meridian is a solo practice today — there is exactly one person with access to client data, site infrastructure, and business systems: Gabriel Koszegi. That's a smaller attack surface than most vendors, and it's disclosed here rather than implied. As the practice grows, any additional access will be least-privilege by default and reflected on this page.</p>
+
+    <h2>Vulnerability disclosure</h2>
+    <p>If you find a security issue with this site or its tools, we want to know before anyone else does. Email <a href="mailto:gabrielszegi8@gmail.com">gabrielszegi8@gmail.com</a> with details — we'll acknowledge within 2 business days and won't pursue legal action against good-faith, non-destructive testing and disclosure. A machine-readable version of this policy is published at <a href="/.well-known/security.txt">/.well-known/security.txt</a>.</p>
+
+    <h2>Incident response commitment</h2>
+    <p>In the event of an incident affecting client data handled during an engagement, affected clients will be notified within 72 hours of confirmation, consistent with the standard we recommend clients hold their own vendors to. This site currently has no user accounts or stored client data, which limits the practical blast radius of a website-level incident.</p>
+
+    <h2>Questions</h2>
+    <p>For anything not covered here — a specific security question before engaging Meridian, or a request for more detail on a control — email <a href="mailto:gabrielszegi8@gmail.com">gabrielszegi8@gmail.com</a>.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>© 2026 Meridian Cyber Advisory. All rights reserved.</p>
+  </div>
+</footer>
+
+</body>
+</html>

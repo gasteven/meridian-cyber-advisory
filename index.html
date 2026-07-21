@@ -349,6 +349,41 @@
     padding: 3px 10px; border-radius: 999px; align-self: flex-start;
   }
 
+  /* Readiness quiz */
+  .quiz-card {
+    max-width: 720px; margin: 0 auto; border: 1px solid var(--border); border-radius: 16px;
+    padding: 40px 36px; background: linear-gradient(180deg, rgba(255,255,255,.025), rgba(255,255,255,0));
+  }
+  .quiz-progress { display: flex; gap: 6px; margin-bottom: 30px; }
+  .quiz-progress-seg { flex: 1; height: 4px; border-radius: 999px; background: var(--border); }
+  .quiz-progress-seg.done { background: var(--cyan); }
+  .quiz-q { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 20px; }
+  .quiz-options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 560px) { .quiz-options { grid-template-columns: 1fr; } }
+  .quiz-opt {
+    font-family: var(--font); font-size: 14.5px; font-weight: 600; color: var(--text-dim);
+    background: var(--bg-alt); border: 1px solid var(--border); border-radius: 10px;
+    padding: 16px 18px; text-align: left; cursor: pointer; transition: border-color .15s ease, color .15s ease, background .15s ease;
+  }
+  .quiz-opt:hover { border-color: var(--cyan); color: #fff; background: rgba(34,211,238,.06); }
+  .quiz-step { display: none; }
+  .quiz-step.active { display: block; }
+  .quiz-back { display: inline-block; margin-top: 18px; font-size: 12.5px; color: var(--text-mute); cursor: pointer; }
+  .quiz-back:hover { color: var(--text-dim); }
+  .quiz-result { display: none; text-align: center; }
+  .quiz-result.show { display: block; }
+  .quiz-result .qr-tag {
+    font-family: var(--mono); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em;
+    color: var(--cyan); background: rgba(34,211,238,.08); border: 1px solid rgba(34,211,238,.25);
+    padding: 4px 12px; border-radius: 999px; display: inline-block; margin-bottom: 16px;
+  }
+  .quiz-result h3 { font-size: 24px; color: #fff; margin-bottom: 8px; }
+  .quiz-result .qr-amount { font-family: var(--mono); font-size: 22px; color: var(--cyan); font-weight: 700; margin-bottom: 16px; }
+  .quiz-result p.qr-why { font-size: 14.5px; color: var(--text-dim); max-width: 520px; margin: 0 auto 24px; }
+  .quiz-result .qr-ctas { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .quiz-restart { display: block; margin-top: 20px; font-size: 12.5px; color: var(--text-mute); cursor: pointer; }
+  .quiz-restart:hover { color: var(--text-dim); }
+
   /* FAQ */
   .faq-list { max-width: 780px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
   .faq-item { border: 1px solid var(--border); border-radius: 12px; background: var(--panel); overflow: hidden; }
@@ -717,13 +752,88 @@
       <div class="proof-card">
         <h3>Every claim is checkable</h3>
         <p>The stats in our free benchmark report cite Verizon's DBIR, IBM's Cost of a Data Breach report, and public DMARC adoption data — sourced, not invented. The free templates are the real documents we use, not watered-down samples.</p>
-        <a href="#resources" class="plink">See the sources →</a>
+        <a href="/trust.html" class="plink">See our own Trust Center →</a>
       </div>
       <div class="proof-card">
         <span class="proof-founding-badge">Founding Clients</span>
         <h3>Priority scheduling, locked-in pricing</h3>
         <p>Early clients get direct input into how engagements are scoped and reported, plus current pricing locked in before rates increase as the practice grows. With your permission, we'll publish a real case study — real numbers, your sign-off required before anything goes live.</p>
         <a href="#contact" class="plink">Start the conversation →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="quiz">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow"><span class="dot"></span>Get a recommendation</span>
+      <h2>Which package actually <span class="gradient-text">fits?</span></h2>
+      <p>Four quick questions, no email required — get a straight answer instead of guessing off a pricing grid.</p>
+    </div>
+    <div class="quiz-card reveal">
+      <div class="quiz-progress" id="quiz-progress">
+        <div class="quiz-progress-seg" data-seg="1"></div>
+        <div class="quiz-progress-seg" data-seg="2"></div>
+        <div class="quiz-progress-seg" data-seg="3"></div>
+        <div class="quiz-progress-seg" data-seg="4"></div>
+      </div>
+
+      <div id="quiz-steps">
+        <div class="quiz-step active" data-step="1">
+          <p class="quiz-q">How many people at your company?</p>
+          <div class="quiz-options">
+            <button class="quiz-opt" data-q="size" data-v="micro">Under 15</button>
+            <button class="quiz-opt" data-q="size" data-v="light">15–30</button>
+            <button class="quiz-opt" data-q="size" data-v="standard">30–100</button>
+            <button class="quiz-opt" data-q="size" data-v="large">100–150+</button>
+          </div>
+        </div>
+
+        <div class="quiz-step" data-step="2">
+          <p class="quiz-q">What's driving this right now?</p>
+          <div class="quiz-options">
+            <button class="quiz-opt" data-q="driver" data-v="proactive">Just being proactive, no fire drill</button>
+            <button class="quiz-opt" data-q="driver" data-v="deal">An enterprise deal or questionnaire is stalled</button>
+            <button class="quiz-opt" data-q="driver" data-v="compliance">An investor or board wants SOC 2 / compliance</button>
+            <button class="quiz-opt" data-q="driver" data-v="live">We need someone on a live customer security call</button>
+          </div>
+          <span class="quiz-back" data-back="1">← Back</span>
+        </div>
+
+        <div class="quiz-step" data-step="3">
+          <p class="quiz-q">Where are you starting from?</p>
+          <div class="quiz-options">
+            <button class="quiz-opt" data-q="state" data-v="nothing">Nothing documented yet</button>
+            <button class="quiz-opt" data-q="state" data-v="adhoc">Some ad hoc policies, nothing formal</button>
+            <button class="quiz-opt" data-q="state" data-v="progress">Partway through SOC 2 or similar</button>
+            <button class="quiz-opt" data-q="state" data-v="ongoing">Already compliant, need ongoing coverage</button>
+          </div>
+          <span class="quiz-back" data-back="2">← Back</span>
+        </div>
+
+        <div class="quiz-step" data-step="4">
+          <p class="quiz-q">What's the timeline?</p>
+          <div class="quiz-options">
+            <button class="quiz-opt" data-q="timeline" data-v="now">This quarter — there's a real deadline</button>
+            <button class="quiz-opt" data-q="timeline" data-v="soon">Next quarter or so</button>
+            <button class="quiz-opt" data-q="timeline" data-v="open">No specific deadline</button>
+            <button class="quiz-opt" data-q="timeline" data-v="unsure">Not sure yet</button>
+          </div>
+          <span class="quiz-back" data-back="3">← Back</span>
+        </div>
+      </div>
+
+      <div class="quiz-result" id="quiz-result">
+        <span class="qr-tag" id="qr-tag">Recommended</span>
+        <h3 id="qr-title"></h3>
+        <div class="qr-amount" id="qr-amount"></div>
+        <p class="qr-why" id="qr-why"></p>
+        <div class="qr-ctas">
+          <a href="#contact" class="btn">Book a free risk snapshot call</a>
+          <a href="#pricing" class="btn-outline">See all packages</a>
+        </div>
+        <span class="quiz-restart" id="quiz-restart">Start over</span>
       </div>
     </div>
   </div>
@@ -929,6 +1039,7 @@
   <div class="wrap">
     <p>© 2026 Meridian Cyber Advisory. All rights reserved.</p>
     <div class="legal-links">
+      <a href="/trust.html">Trust</a>
       <a href="/privacy.html">Privacy</a>
       <a href="/terms.html">Terms</a>
     </div>
@@ -1028,6 +1139,91 @@
         window.location.href = 'mailto:gabrielszegi8@gmail.com?subject=Contact%20from%20site';
       });
   });
+
+  // Readiness quiz
+  (function () {
+    const answers = {};
+    const steps = document.querySelectorAll('.quiz-step');
+    const segs = document.querySelectorAll('.quiz-progress-seg');
+    const progressEl = document.getElementById('quiz-progress');
+    const resultEl = document.getElementById('quiz-result');
+    const stepsWrap = document.getElementById('quiz-steps');
+    let current = 1;
+
+    function showStep(n) {
+      current = n;
+      steps.forEach((s) => s.classList.toggle('active', Number(s.dataset.step) === n));
+      segs.forEach((seg) => seg.classList.toggle('done', Number(seg.dataset.seg) < n));
+    }
+
+    document.querySelectorAll('.quiz-opt').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        answers[btn.dataset.q] = btn.dataset.v;
+        if (current < 4) {
+          showStep(current + 1);
+        } else {
+          segs.forEach((seg) => seg.classList.add('done'));
+          renderResult();
+        }
+      });
+    });
+
+    document.querySelectorAll('.quiz-back').forEach((back) => {
+      back.addEventListener('click', () => showStep(Number(back.dataset.back)));
+    });
+
+    document.getElementById('quiz-restart').addEventListener('click', () => {
+      Object.keys(answers).forEach((k) => delete answers[k]);
+      resultEl.classList.remove('show');
+      progressEl.style.display = 'flex';
+      stepsWrap.style.display = 'block';
+      segs.forEach((seg) => seg.classList.remove('done'));
+      showStep(1);
+    });
+
+    function renderResult() {
+      let pkg;
+      if (answers.driver === 'live') {
+        pkg = {
+          title: 'Embedded Security Expert',
+          amount: 'Scoped per deal — contact for a quote',
+          why: "You need someone who can sit on a live customer security call and answer questions in real time. That's a specific, deal-by-deal engagement rather than a standard retainer — let's scope it to the deal you're trying to unblock.",
+        };
+      } else if ((answers.driver === 'deal' || answers.driver === 'compliance') && answers.timeline === 'now') {
+        pkg = {
+          title: 'Compliance Sprint',
+          amount: '$9K–18K, fixed scope',
+          why: 'A real deadline plus a compliance or deal-blocking trigger points to a focused sprint — gap assessment, policy and evidence prep, and audit or questionnaire support, scoped to get you audit-ready on a timeline instead of an open-ended retainer.',
+        };
+      } else if (answers.size === 'micro' || (answers.size === 'light' && answers.driver === 'proactive')) {
+        pkg = {
+          title: 'vCISO — Light',
+          amount: '$2.5K–4K / mo',
+          why: "At your size, with no immediate fire drill, ongoing light-touch advisory (8–12 hrs/mo) is usually enough to build the fundamentals before you need anything heavier.",
+        };
+      } else if (answers.size === 'large' || answers.state === 'ongoing') {
+        pkg = {
+          title: 'vCISO — Standard',
+          amount: '$4.5K–8K / mo',
+          why: 'Your size and stage point to ongoing strategic coverage — policy build-out, vendor review, and regular reporting to leadership — rather than a one-time project.',
+        };
+      } else {
+        pkg = {
+          title: 'vCISO — Standard',
+          amount: '$4.5K–8K / mo',
+          why: "Given what's driving this and where you're starting from, ongoing coverage (15–20 hrs/mo) is the most natural fit — it gives room to handle the immediate trigger and build lasting fundamentals at the same time.",
+        };
+      }
+
+      document.getElementById('qr-title').textContent = pkg.title;
+      document.getElementById('qr-amount').textContent = pkg.amount;
+      document.getElementById('qr-why').textContent = pkg.why;
+      progressEl.style.display = 'none';
+      stepsWrap.style.display = 'none';
+      resultEl.classList.add('show');
+      resultEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  })();
 </script>
 
 </body>
