@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /portal.html
+Disallow: /data/
 
 Sitemap: https://meridian-cyber-advisory.netlify.app/sitemap.xml

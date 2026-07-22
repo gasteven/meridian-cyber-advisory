@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Client Portal — Meridian Cyber Advisory</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #05070D; --bg-alt: #0A0E1A; --panel: #0F1424; --panel-2: #131A2E;
+    --border: #232B45; --text: #E7EAF3; --text-dim: #8992AB; --text-mute: #5B6382;
+    --cyan: #22D3EE; --blue: #3B82F6; --violet: #8B5CF6; --green: #34D399;
+    --amber: #FBBF24; --red: #F87171;
+    --font: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --mono: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font); color: var(--text); background: var(--bg); line-height: 1.6; }
+  a { text-decoration: none; color: inherit; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  header { border-bottom: 1px solid var(--border); background: rgba(5,7,13,.9); position: sticky; top: 0; z-index: 10; }
+  header .wrap { display: flex; align-items: center; justify-content: space-between; height: 70px; }
+  .logo { font-weight: 800; font-size: 17px; display: flex; align-items: center; gap: 10px; }
+  .logo-mark { width: 28px; height: 28px; border-radius: 8px; background: linear-gradient(135deg, var(--cyan), var(--violet)); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-weight: 700; font-size: 13px; color: #05070D; }
+  header a.back { font-size: 13.5px; color: var(--text-dim); font-weight: 600; }
+  header a.back:hover { color: #fff; }
+
+  .private-banner {
+    background: linear-gradient(90deg, rgba(34,211,238,.1), rgba(139,92,246,.1));
+    border-bottom: 1px solid var(--border); text-align: center; padding: 10px 16px;
+    font-size: 13.5px; color: var(--text-dim);
+  }
+  .private-banner strong { color: var(--cyan); }
+
+  main { padding: 44px 0 80px; }
+
+  #state-loading, #state-error { text-align: center; padding: 100px 24px; color: var(--text-mute); font-size: 14.5px; }
+  #state-error h2 { color: var(--text); font-size: 20px; margin-bottom: 10px; }
+
+  #dashboard { display: none; }
+
+  .page-head { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 18px; margin-bottom: 12px; }
+  .page-head h1 { font-size: 26px; font-weight: 800; margin-bottom: 6px; }
+  .page-head p { font-size: 14px; color: var(--text-mute); }
+  .as-of { font-family: var(--mono); font-size: 12.5px; color: var(--text-mute); text-align: right; }
+  .as-of div + div { margin-top: 4px; }
+
+  .risk-summary {
+    background: var(--panel); border: 1px solid var(--border); border-left: 3px solid var(--cyan);
+    border-radius: 10px; padding: 18px 22px; margin-bottom: 32px; font-size: 14px; color: var(--text-dim);
+  }
+  .risk-summary strong { color: var(--text); }
+
+  .summary-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 36px; }
+  @media (max-width: 800px) { .summary-row { grid-template-columns: repeat(2, 1fr); } }
+  .summary-card { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+  .summary-card .num { font-family: var(--mono); font-size: 28px; font-weight: 700; color: var(--cyan); }
+  .summary-card .lbl { font-size: 12.5px; color: var(--text-mute); margin-top: 4px; }
+
+  .progress-outer { background: var(--panel-2); border-radius: 999px; height: 10px; overflow: hidden; margin-top: 10px; }
+  .progress-inner { height: 100%; background: linear-gradient(90deg, var(--cyan), var(--green)); border-radius: 999px; }
+
+  .section-title { font-size: 18px; font-weight: 800; margin: 40px 0 16px; }
+
+  .category { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 24px 26px; margin-bottom: 18px; }
+  .category-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .category-head h2 { font-size: 16px; color: #fff; }
+  .category-head .count { font-family: var(--mono); font-size: 13px; color: var(--text-mute); }
+
+  .control-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-top: 1px solid var(--border); font-size: 13.5px; }
+  .control-row:first-of-type { border-top: none; }
+  .control-name { color: var(--text-dim); }
+  .status-pill { font-family: var(--mono); font-size: 11.5px; font-weight: 700; padding: 4px 10px; border-radius: 999px; text-transform: uppercase; letter-spacing: .03em; white-space: nowrap; }
+  .status-complete { background: rgba(52,211,153,.12); color: var(--green); border: 1px solid rgba(52,211,153,.3); }
+  .status-progress { background: rgba(251,191,36,.12); color: var(--amber); border: 1px solid rgba(251,191,36,.3); }
+  .status-pending { background: rgba(248,113,113,.1); color: var(--red); border: 1px solid rgba(248,113,113,.28); }
+  .status-open { background: rgba(248,113,113,.1); color: var(--red); border: 1px solid rgba(248,113,113,.28); }
+  .status-resolved { background: rgba(52,211,153,.12); color: var(--green); border: 1px solid rgba(52,211,153,.3); }
+
+  .finding { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 18px 22px; margin-bottom: 12px; }
+  .finding-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 6px; }
+  .finding-title { font-size: 14.5px; font-weight: 700; color: #fff; }
+  .sev-pill { font-family: var(--mono); font-size: 10.5px; font-weight: 700; padding: 3px 9px; border-radius: 999px; text-transform: uppercase; letter-spacing: .03em; }
+  .sev-high { background: rgba(248,113,113,.14); color: var(--red); border: 1px solid rgba(248,113,113,.3); }
+  .sev-medium { background: rgba(251,191,36,.14); color: var(--amber); border: 1px solid rgba(251,191,36,.3); }
+  .sev-low { background: rgba(139,92,246,.14); color: var(--violet); border: 1px solid rgba(139,92,246,.3); }
+  .finding-detail { font-size: 13px; color: var(--text-dim); margin-bottom: 8px; }
+  .finding-meta { font-size: 12px; color: var(--text-mute); font-family: var(--mono); display: flex; justify-content: space-between; }
+
+  .doc-list { list-style: none; }
+  .doc-row { display: flex; align-items: center; justify-content: space-between; background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 14px 20px; margin-bottom: 10px; font-size: 14px; }
+  .doc-row a { color: var(--cyan); font-weight: 600; }
+  .doc-row a:hover { text-decoration: underline; }
+
+  .advisor-note { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 22px 26px; margin-top: 40px; }
+  .advisor-note h2 { font-size: 15px; margin-bottom: 10px; color: #fff; }
+  .advisor-note p { font-size: 14px; color: var(--text-dim); }
+
+  footer { border-top: 1px solid var(--border); padding: 28px 0; text-align: center; margin-top: 50px; }
+  footer p { font-size: 12.5px; color: var(--text-mute); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="logo"><span class="logo-mark">M</span>Meridian Cyber Advisory</div>
+    <a href="/" class="back">← Back to site</a>
+  </div>
+</header>
+
+<div class="private-banner">
+  <strong>Private client dashboard</strong> — this link is unique to your engagement. Please don't share it.
+</div>
+
+<main>
+  <div class="wrap">
+
+    <div id="state-loading">Loading your dashboard…</div>
+
+    <div id="state-error" style="display:none">
+      <h2>We couldn't find that dashboard</h2>
+      <p>Double-check the link, or reach out to <a href="mailto:gabrielszegi8@gmail.com" style="color:var(--cyan)">gabrielszegi8@gmail.com</a> and I'll resend it.</p>
+    </div>
+
+    <div id="dashboard">
+      <div class="page-head">
+        <div>
+          <h1 id="d-company">—</h1>
+          <p id="d-subtitle">—</p>
+        </div>
+        <div class="as-of">
+          <div>As of <span id="d-asof">—</span></div>
+          <div>Next review: <span id="d-next">—</span></div>
+        </div>
+      </div>
+
+      <div class="risk-summary" id="d-risk-summary-wrap" style="display:none">
+        <strong>Where things stand:</strong> <span id="d-risk-summary"></span>
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-card">
+          <div class="num" id="d-pct">—</div>
+          <div class="lbl">Overall readiness</div>
+          <div class="progress-outer"><div class="progress-inner" id="d-pct-bar" style="width:0%"></div></div>
+        </div>
+        <div class="summary-card">
+          <div class="num" id="d-complete">—</div>
+          <div class="lbl">Controls complete</div>
+        </div>
+        <div class="summary-card">
+          <div class="num" id="d-progress">—</div>
+          <div class="lbl">In progress</div>
+        </div>
+        <div class="summary-card">
+          <div class="num" id="d-pending">—</div>
+          <div class="lbl">Not started</div>
+        </div>
+      </div>
+
+      <div id="d-categories"></div>
+
+      <div id="d-findings-section" style="display:none">
+        <div class="section-title">Open Findings</div>
+        <div id="d-findings"></div>
+      </div>
+
+      <div id="d-documents-section" style="display:none">
+        <div class="section-title">Documents</div>
+        <ul class="doc-list" id="d-documents"></ul>
+      </div>
+
+      <div class="advisor-note" id="d-note-wrap" style="display:none">
+        <h2>Note from Gabriel</h2>
+        <p id="d-note"></p>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>© 2026 Meridian Cyber Advisory. This dashboard is private to your engagement.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  const params = new URLSearchParams(window.location.search);
+  const slug = (params.get('c') || '').replace(/[^a-zA-Z0-9\-_]/g, '');
+  const loadingEl = document.getElementById('state-loading');
+  const errorEl = document.getElementById('state-error');
+  const dashEl = document.getElementById('dashboard');
+
+  function showError() {
+    loadingEl.style.display = 'none';
+    errorEl.style.display = 'block';
+  }
+
+  function statusClass(status) {
+    if (status === 'complete') return 'status-complete';
+    if (status === 'progress') return 'status-progress';
+    return 'status-pending';
+  }
+  function statusLabel(status) {
+    if (status === 'complete') return 'Complete';
+    if (status === 'progress') return 'In Progress';
+    return 'Not Started';
+  }
+
+  function render(data) {
+    document.title = (data.company || 'Client') + ' — Meridian Cyber Advisory';
+    document.getElementById('d-company').textContent = (data.company || 'Client') + ' — Compliance Dashboard';
+    document.getElementById('d-subtitle').textContent = [data.framework, data.engagement_tier].filter(Boolean).join(' · ') || 'Engagement overview';
+    document.getElementById('d-asof').textContent = data.as_of || '—';
+    document.getElementById('d-next').textContent = data.next_review || '—';
+
+    const s = data.summary || {};
+    document.getElementById('d-pct').textContent = (s.readiness_pct != null ? s.readiness_pct + '%' : '—');
+    document.getElementById('d-pct-bar').style.width = (s.readiness_pct || 0) + '%';
+    document.getElementById('d-complete').textContent = s.complete != null ? s.complete : '—';
+    document.getElementById('d-progress').textContent = s.in_progress != null ? s.in_progress : '—';
+    document.getElementById('d-pending').textContent = s.not_started != null ? s.not_started : '—';
+
+    if (data.risk_summary) {
+      document.getElementById('d-risk-summary').textContent = data.risk_summary;
+      document.getElementById('d-risk-summary-wrap').style.display = 'block';
+    }
+
+    const catsEl = document.getElementById('d-categories');
+    (data.categories || []).forEach(cat => {
+      const complete = (cat.controls || []).filter(c => c.status === 'complete').length;
+      const total = (cat.controls || []).length;
+      const div = document.createElement('div');
+      div.className = 'category';
+      div.innerHTML = `
+        <div class="category-head">
+          <h2>${cat.name}</h2>
+          <span class="count">${complete} / ${total} complete</span>
+        </div>
+        ${(cat.controls || []).map(c => `
+          <div class="control-row">
+            <span class="control-name">${c.name}</span>
+            <span class="status-pill ${statusClass(c.status)}">${statusLabel(c.status)}</span>
+          </div>
+        `).join('')}
+      `;
+      catsEl.appendChild(div);
+    });
+
+    if (data.findings && data.findings.length) {
+      document.getElementById('d-findings-section').style.display = 'block';
+      const fEl = document.getElementById('d-findings');
+      data.findings.forEach(f => {
+        const div = document.createElement('div');
+        div.className = 'finding';
+        div.innerHTML = `
+          <div class="finding-head">
+            <span class="finding-title">${f.title}</span>
+            <span class="sev-pill sev-${f.severity}">${f.severity}</span>
+          </div>
+          <div class="finding-detail">${f.detail || ''}</div>
+          <div class="finding-meta">
+            <span class="status-pill ${f.status === 'resolved' ? 'status-resolved' : 'status-open'}">${f.status === 'resolved' ? 'Resolved' : 'Open'}</span>
+            <span>${f.due ? 'Due ' + f.due : ''}</span>
+          </div>
+        `;
+        fEl.appendChild(div);
+      });
+    }
+
+    if (data.documents && data.documents.length) {
+      document.getElementById('d-documents-section').style.display = 'block';
+      const dEl = document.getElementById('d-documents');
+      data.documents.forEach(doc => {
+        const li = document.createElement('li');
+        li.className = 'doc-row';
+        li.innerHTML = `<span>${doc.title}</span><a href="${doc.url}" target="_blank" rel="noopener">View →</a>`;
+        dEl.appendChild(li);
+      });
+    }
+
+    if (data.advisor_note) {
+      document.getElementById('d-note').textContent = data.advisor_note;
+      document.getElementById('d-note-wrap').style.display = 'block';
+    }
+
+    loadingEl.style.display = 'none';
+    dashEl.style.display = 'block';
+  }
+
+  if (!slug) {
+    showError();
+    return;
+  }
+
+  fetch('/data/clients/' + slug + '.json', { cache: 'no-store' })
+    .then(res => {
+      if (!res.ok) throw new Error('not found');
+      return res.json();
+    })
+    .then(render)
+    .catch(showError);
+})();
+</script>
+
+</body>
+</html>
