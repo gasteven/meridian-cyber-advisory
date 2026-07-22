@@ -1,0 +1,106 @@
+{
+  "company": "Acme SaaS Inc.",
+  "framework": "SOC 2 Type II",
+  "engagement_tier": "vCISO — Standard",
+  "as_of": "July 21, 2026",
+  "next_review": "August 21, 2026",
+  "risk_summary": "Overall trajectory is solid heading into the audit window. The two open findings below (vendor DPAs and the annual policy review) are the main blockers to a clean Type II report — both are on track to close by the next review.",
+  "summary": {
+    "readiness_pct": 68,
+    "complete": 23,
+    "in_progress": 8,
+    "not_started": 3
+  },
+  "categories": [
+    {
+      "name": "Access Control",
+      "controls": [
+        {
+          "name": "MFA enforced on all admin accounts",
+          "status": "complete"
+        },
+        {
+          "name": "Quarterly access review",
+          "status": "complete"
+        },
+        {
+          "name": "Least-privilege role mapping",
+          "status": "progress"
+        },
+        {
+          "name": "Offboarding revokes access within 24h",
+          "status": "complete"
+        }
+      ]
+    },
+    {
+      "name": "Data Protection",
+      "controls": [
+        {
+          "name": "Encryption at rest (production DB)",
+          "status": "complete"
+        },
+        {
+          "name": "Encryption in transit (TLS 1.2+)",
+          "status": "complete"
+        },
+        {
+          "name": "Data retention & deletion policy",
+          "status": "progress"
+        }
+      ]
+    },
+    {
+      "name": "Vendor Management",
+      "controls": [
+        {
+          "name": "Vendor risk questionnaire on file",
+          "status": "complete"
+        },
+        {
+          "name": "Subprocessor list maintained",
+          "status": "complete"
+        },
+        {
+          "name": "DPA signed with all Restricted-data vendors",
+          "status": "pending"
+        },
+        {
+          "name": "Annual vendor re-review",
+          "status": "progress"
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "severity": "medium",
+      "title": "Two vendors missing signed DPAs",
+      "detail": "Analytics and email-delivery subprocessors handle customer data but don't have a signed Data Processing Agreement on file yet.",
+      "status": "open",
+      "due": "Aug 8, 2026"
+    },
+    {
+      "severity": "low",
+      "title": "Annual policy review overdue",
+      "detail": "Information security policy is due for its yearly review and re-sign-off from staff.",
+      "status": "open",
+      "due": "Aug 15, 2026"
+    }
+  ],
+  "documents": [
+    {
+      "title": "Information Security Policy v2.1",
+      "url": "https://meridian-cyber-advisory.netlify.app/resources/information-security-policy-template.docx"
+    },
+    {
+      "title": "Incident Response Plan",
+      "url": "https://meridian-cyber-advisory.netlify.app/resources/incident-response-plan-template.docx"
+    },
+    {
+      "title": "Vendor Risk Questionnaire (blank)",
+      "url": "https://meridian-cyber-advisory.netlify.app/resources/vendor-risk-questionnaire-template.docx"
+    }
+  ],
+  "advisor_note": "Good progress this month. Once the two vendor DPAs are signed, we're essentially audit-ready — I'll follow up directly with a draft email you can send to both vendors."
+}
